@@ -12,11 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    static TeamSurvival plugin;
-    @SuppressWarnings("static-access")
-    public Utils(TeamSurvival plugin){
-        this.plugin = plugin;
-    }
+    static TeamSurvival plugin = TeamSurvival.getInstance();
 
     public static String colorize(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -63,7 +59,7 @@ public class Utils {
     // Check if the target is offline/null, returns true/false.
     public static boolean offlineCheck(Player target, CommandSender sender, String replacement){
         if (target == null){
-            sender.sendMessage(Utils.ucs("targetNull").replaceAll("%target%", replacement));
+            sender.sendMessage(Utils.ucs("targetOffline").replaceAll("%target%", replacement));
             return false;
         }
         return true;
@@ -111,6 +107,10 @@ public class Utils {
         sender.sendMessage(Utils.ucs(path).replaceAll(replace, replacement).replaceAll(replace2, replacement2));
     }
 
+    // Send a raw message to a CommandSender
+    public static void sendRawMsg(CommandSender sender, String message){
+        sender.sendMessage(Utils.colorize(message));
+    }
 
     // Send message to a player
     public static void sendMsg(Player player, String path){
@@ -127,6 +127,11 @@ public class Utils {
         player.sendMessage(Utils.ucs(path).replaceAll(replace, replacement).replaceAll(replace2, replacement2));
     }
 
+    // Send a raw message to a player
+    public static void sendRawMsg(Player player, String message){
+        player.sendMessage(Utils.colorize(message));
+    }
+
     // Convert a string list into messages and send them to a CommandSender
     public static void sendMessageList(CommandSender sender, String path){
         for (String output : Utils.csl(path)){
@@ -134,9 +139,23 @@ public class Utils {
         }
     }
 
+    // Convert a raw string list into messages and send them to a CommandSender
+    public static void sendRawMessageList(CommandSender sender, List<String> messageList){
+        for (String output : messageList){
+            sender.sendMessage(Utils.colorize(output));
+        }
+    }
+
     // Convert a string list into messages and send them to a player
     public static void sendMessageList(Player player, String path){
         for (String output : Utils.csl(path)){
+            player.sendMessage(Utils.colorize(output));
+        }
+    }
+
+    // Convert a raw string list into messages and send them to a player
+    public static void sendRawMessageList(Player player, List<String> messageList){
+        for (String output : messageList){
             player.sendMessage(Utils.colorize(output));
         }
     }
