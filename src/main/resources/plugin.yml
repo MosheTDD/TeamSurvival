@@ -1,0 +1,5 @@
+name: TeamSurvival
+version: ${project.version}
+main: org.mamadev.teamsurvival.TeamSurvival
+api-version: 1.13
+authors: [MrBorder, MosheTDD]
