@@ -5,12 +5,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.mamadev.teamsurvival.RandomizeTeams;
 import org.mamadev.teamsurvival.TeamSurvival;
+
+import java.util.ArrayList;
+
 import static org.mamadev.teamsurvival.utils.Utils.*;
 
 public class Setup implements CommandExecutor {
     private TeamSurvival plugin = TeamSurvival.getInstance();
-    private Player[] players;
+    private ArrayList<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
     public Setup(){
     }
 
@@ -20,16 +24,12 @@ public class Setup implements CommandExecutor {
             return true;
         }
         if (!argsCheck(sender, 1, args)) return true;
-        int playerCount = Bukkit.getOnlinePlayers().size();
-        players = new Player[playerCount];
-        int count = 0;
         for (Player all : Bukkit.getOnlinePlayers()) {
             sendRawMsg(all, "&cStarting setup proccess");
-            players[count] = all;
-            count++;
         }
-        int numOfTeams = playerCount/2;
-        //RandomizeTeams.setupTeams(players, numOfTeams);
+        int numOfTeams = players.size()/2;
+        RandomizeTeams.setupTeams(players, numOfTeams);
         return false;
    }
+
 }
